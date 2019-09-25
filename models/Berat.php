@@ -54,4 +54,33 @@ class Berat extends \yii\db\ActiveRecord
     {
         return new BeratQuery(get_called_class());
     }
+
+    public static function getPerbedeaanAvg($provider)
+    {
+        $total = 0;
+
+        foreach ($provider->models as $k => $item) {
+            $total += $item['max'] - $item['min'];
+        }
+
+        // add number_format() before return
+        $total = number_format( $total/($k+1), 1 );
+
+        return $total;
+    }
+
+    public static function getAvg($provider, $fieldName)
+    {
+        $total = 0;
+
+        foreach ($provider->models as $k => $item) {
+            $total += $item[$fieldName];
+        }
+
+        // add number_format() before return
+        $total = number_format( $total/($k+1), 1 );
+
+        return $total;
+    }
+
 }

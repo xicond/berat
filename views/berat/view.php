@@ -13,7 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="berat-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->tanggal], ['class' => 'btn btn-primary']) ?>
@@ -29,9 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'tanggal',
+            [
+		'attribute' => 'tanggal',
+		'format' => ['date', 'php:Y-m-d'],
+	    ],
             'max',
             'min',
+	    [
+		'label' => 'Perbedeaan',
+		'value' => $model->max - $model->min,
+	    ],
         ],
     ]) ?>
 

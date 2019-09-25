@@ -2,7 +2,7 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=mariadb;dbname=sirclo',
+    'dsn' => 'mysql:host=localhost;dbname=sirclo',
     'username' => 'root',
     'password' => '',
     'charset' => 'utf8',

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use app\models\Berat;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\BeratSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -23,16 +24,38 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            //['class' => 'yii\grid\SerialColumn'],
 
-            'tanggal',
-            'max',
-            'min',
+            [
+		'attribute' => 'tanggal',
+		'footer' => '<b>Rata-rata</b>',
+		'format'=>['date', 'php:Y-m-d'],
+	    ],
+           
+	    [
+		'attribute' => 'max',
+		'footer' => Berat::getAvg($dataProvider, 'max'),
+	    ],
+
+            [
+		'attribute' => 'min',
+		'footer' => Berat::getAvg($dataProvider, 'min'),
+	    ],
+
+     	    [
+       		'label' => 'Perbedeaan',
+       		'value' => function ($model) {
+          	    return $model->max - $model->min;
+       		},
+		'footer' => Berat::getPerbedeaanAvg($dataProvider),
+     	    ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
+
+	'showFooter' => true,
     ]); ?>
 
     <?php Pjax::end(); ?>
